@@ -1,0 +1,14 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+Youtu-LLM-2B-GGUF
+vector_db
+.agent_cache
+*.egg-info
+dist
+build
+.env
+*.log

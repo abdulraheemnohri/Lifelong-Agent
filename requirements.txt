@@ -1,0 +1,6 @@
+# Core runtime dependencies for the Lifelong Self-Evolving Offline Agent.
+# Heavy / optional dependencies live in requirements-optional.txt and are
+# imported lazily with graceful fallbacks at runtime.
+
+huggingface-hub>=0.20
+textual>=0.40

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lifelong-self-evolving-agent"
+version = "0.1.0"
+description = "Lifelong self-evolving offline agent: memory, skills, self-written tools, pytest validation, genetic evolution, and Git-based self-modification with rollback."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Abdulraheem Nohari" }]
+keywords = ["agent", "llm", "offline", "gguf", "self-evolving", "genetic-algorithms", "lifelong-learning"]
+dependencies = []
+
+[project.optional-dependencies]
+core = [
+    "huggingface-hub>=0.20",
+    "textual>=0.40",
+]
+gguf = ["llama-cpp-python>=0.2.60"]
+vector = ["chromadb>=0.4"]
+embeddings = ["sentence-transformers>=2.2"]
+autogen = ["pyautogen>=0.2"]
+all = [
+    "huggingface-hub>=0.20",
+    "textual>=0.40",
+    "llama-cpp-python>=0.2.60",
+    "chromadb>=0.4",
+    "sentence-transformers>=2.2",
+    "pyautogen>=0.2",
+]
+
+[tool.setuptools.packages.find]
+include = ["lifelong_agent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

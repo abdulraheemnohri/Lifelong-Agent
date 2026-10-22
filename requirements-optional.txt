@@ -1,0 +1,10 @@
+# Optional heavy dependencies. The project works without all of them:
+# - llama-cpp-python  -> real offline GGUF inference (fallback: MockLLM)
+# - chromadb          -> persistent vector database (fallback: JSON + cosine)
+# - sentence-transformers -> local embeddings (fallback: deterministic hash embedder)
+# - pyautogen         -> AutoGen multi-agent integration (optional adapter)
+
+llama-cpp-python>=0.2.60
+chromadb>=0.4
+sentence-transformers>=2.2
+pyautogen>=0.2

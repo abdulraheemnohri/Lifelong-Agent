@@ -1,0 +1,36 @@
+# Example configuration for the Lifelong Self-Evolving Offline Agent.
+# All of these values can also be provided via environment variables (see USAGE.md).
+# This file is documentation only; the agent reads configuration from env vars.
+
+model:
+  repo: tencent/Youtu-LLM-2B        # MODEL_REPO
+  revision: GGUF                    # MODEL_REVISION
+  dir: Youtu-LLM-2B-GGUF            # MODEL_DIR
+
+llm:
+  backend: auto                     # LLM_BACKEND: auto | gguf | mock | openai_compatible
+  gguf_n_ctx: 4096                  # GGUF_N_CTX
+  gguf_n_gpu_layers: 0              # GGUF_N_GPU_LAYERS
+  gguf_n_threads: 4                 # GGUF_N_THREADS
+  gguf_max_tokens: 512             # GGUF_MAX_TOKENS
+  gguf_temperature: 0.7             # GGUF_TEMPERATURE
+
+embedder:
+  backend: auto                    # EMBEDDER_BACKEND: auto | sentence-transformer | hash
+
+vector:
+  backend: auto                    # VECTOR_BACKEND: auto | chroma | json
+
+agent:
+  enable_self_writing_tools: true   # ENABLE_SELF_WRITING_TOOLS
+  enable_genetic_evolution: true    # ENABLE_GENETIC_EVOLUTION
+  enable_git_self_modification: true # ENABLE_GIT_SELF_MODIFICATION
+  enable_tui: true                  # ENABLE_TUI
+  success_threshold: 0.75           # SUCCESS_THRESHOLD
+  max_task_attempts: 2             # MAX_TASK_ATTEMPTS
+  meta_evolve_every: 3             # META_EVOLVE_EVERY
+
+evolution:
+  genetic_evolve_every: 3           # GENETIC_EVOLVE_EVERY
+  population_size: 8                 # POPULATION_SIZE
+  seed: 42                          # EVOLUTION_SEED
