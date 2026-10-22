@@ -52,8 +52,10 @@ class HashEmbedder(BaseEmbedder):
         return self._dim
 
     def _bucket(self, token: str) -> int:
-        digest = hashlib.blake2b(token.encode("utf-8"), digest_size=8).digest()
-        return int.from_bytes(digest, "big") % self._dim
+        # MD5 is the classic "hashing trick" bucketing hash: deterministic
+        # across processes/machines and non-cryptographic by design.
+        digest = hashlib.md5(token.encode("utf-8")).digest()  # noqa: S324
+        return int.from_bytes(digest[:8], "big") % self._dim
 
     def embed(self, text: str) -> list[float]:
         vector = [0.0] * self._dim

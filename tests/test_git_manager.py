@@ -42,6 +42,8 @@ def test_commit_and_log(tmp_path: Path):
 
 def test_commit_without_changes_returns_none(tmp_path: Path):
     manager = make_repo(tmp_path)
+    # init() writes a fresh .gitignore; commit it once to reach a clean tree.
+    assert manager.commit("initial state") is not None
     assert manager.commit("empty") is None
 
 
