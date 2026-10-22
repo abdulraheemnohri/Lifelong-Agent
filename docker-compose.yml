@@ -1,0 +1,29 @@
+services:
+  lifelong-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lifelong-agent:latest
+    container_name: lifelong-agent
+    # The container IS the sandbox for generated tools.
+    security_opt:
+      - no-new-privileges:true
+    read_only: false
+    volumes:
+      # Agent workspace: state, skills, genomes, generated tools, git history.
+      - agent-workspace:/home/agent/workspace
+      # Mount downloaded GGUF models here (read-only) to avoid re-downloading.
+      # - ./Youtu-LLM-2B-GGUF:/home/agent/workspace/Youtu-LLM-2B-GGUF:ro
+    environment:
+      - WORKSPACE=/home/agent/workspace
+      - LLM_BACKEND=${LLM_BACKEND:-auto}
+      - EMBEDDER_BACKEND=${EMBEDDER_BACKEND:-auto}
+      - VECTOR_BACKEND=${VECTOR_BACKEND:-auto}
+      - ENABLE_GENETIC_EVOLUTION=${ENABLE_GENETIC_EVOLUTION:-true}
+      - ENABLE_GIT_SELF_MODIFICATION=${ENABLE_GIT_SELF_MODIFICATION:-true}
+      # Pass a Hugging Face token for gated model downloads:
+      - HF_TOKEN=${HF_TOKEN:-}
+    restart: unless-stopped
+
+volumes:
+  agent-workspace:
