@@ -1,0 +1,65 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.17, pytest-9.1.1, pluggy-1.7.0
+rootdir: /home/runner/work/Lifelong-Agent/Lifelong-Agent
+configfile: pyproject.toml
+testpaths: tests
+plugins: platformdirs-4.13.5, anyio-4.15.1
+collected 100 items
+
+tests/test_agent.py ...............                                      [ 15%]
+tests/test_autogen_adapter.py ....                                       [ 19%]
+tests/test_downloader.py .........                                       [ 28%]
+tests/test_embedders.py ..........                                       [ 38%]
+tests/test_genetic.py ..........                                         [ 48%]
+tests/test_git_manager.py ..F.....                                       [ 56%]
+tests/test_llm.py ......                                                 [ 62%]
+tests/test_memory.py F.....                                              [ 68%]
+tests/test_skill_library.py .......                                      [ 75%]
+tests/test_tool_forge.py ......                                          [ 81%]
+tests/test_tool_registry.py .......                                      [ 88%]
+tests/test_tui_smoke.py ...                                              [ 91%]
+tests/test_validator.py .........                                        [100%]
+
+=================================== FAILURES ===================================
+___________________ test_commit_without_changes_returns_none ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_commit_without_changes_re0')
+
+    def test_commit_without_changes_returns_none(tmp_path: Path):
+        manager = make_repo(tmp_path)
+>       assert manager.commit("empty") is None
+E       AssertionError: assert 'ee3499496e8daad5751687df11e9dcb952595ff0' is None
+E        +  where 'ee3499496e8daad5751687df11e9dcb952595ff0' = commit('empty')
+E        +    where commit = <lifelong_agent.git.git_manager.GitManager object at 0x7e4ce00dbb90>.commit
+
+tests/test_git_manager.py:45: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     lifelong_agent.git:git_manager.py:88 Initialized Git repository in /tmp/pytest-of-runner/pytest-0/test_commit_without_changes_re0
+INFO     lifelong_agent.git:git_manager.py:110 Updated .gitignore with 7 entries
+INFO     lifelong_agent.git:git_manager.py:148 Committed ee349949: empty
+___________________ test_json_memory_add_and_search_ranking ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_json_memory_add_and_searc0')
+
+    def test_json_memory_add_and_search_ranking(tmp_path: Path):
+        memory = JSONVectorMemory(tmp_path / "mem.json", HashEmbedder(64))
+        memory.add("task: count words in a sentence", {"task": "count words"})
+        memory.add("task: reverse a string", {"task": "reverse"})
+        memory.add("task: count characters carefully", {"task": "count chars"})
+    
+        hits = memory.search("count words", k=2)
+        assert hits, "expected at least one hit"
+>       assert hits[0]["text"].startswith("task: count words")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7e4ce0896850>('task: count words')
+E        +    where <built-in method startswith of str object at 0x7e4ce0896850> = 'task: count characters carefully'.startswith
+
+tests/test_memory.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_git_manager.py::test_commit_without_changes_returns_none - AssertionError: assert 'ee3499496e8daad5751687df11e9dcb952595ff0' is None
+ +  where 'ee3499496e8daad5751687df11e9dcb952595ff0' = commit('empty')
+ +    where commit = <lifelong_agent.git.git_manager.GitManager object at 0x7e4ce00dbb90>.commit
+FAILED tests/test_memory.py::test_json_memory_add_and_search_ranking - AssertionError: assert False
+ +  where False = <built-in method startswith of str object at 0x7e4ce0896850>('task: count words')
+ +    where <built-in method startswith of str object at 0x7e4ce0896850> = 'task: count characters carefully'.startswith
+========================= 2 failed, 98 passed in 2.45s =========================
